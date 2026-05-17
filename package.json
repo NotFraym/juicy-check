@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "dotenv-cli": "^11.0.0"
+  },
+  "dependencies": {
+    "better-auth": "^1.6.5"
+  }
+}
