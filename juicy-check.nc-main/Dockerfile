@@ -1,20 +1,23 @@
-# ── Étape 1 : Build ──────────────────────────────────
+# Build stage
 FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
 RUN npm run build
 
-# ── Étape 2 : Serveur de production ──────────────────
-FROM nginx:alpine
+# Production stage
+FROM node:22-alpine AS runner
 
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
-EXPOSE 80
+COPY --from=builder /app/dist ./dist
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 5000
+
+CMD ["npx", "vite", "preview", "--host", "0.0.0.0", "--port", "5000"]

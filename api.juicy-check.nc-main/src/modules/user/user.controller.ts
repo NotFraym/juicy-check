@@ -9,13 +9,13 @@ export class UserController {
     }
 
     @Get('public')
-    @AllowAnonymous()
+    @AllowAnonymous() // Allow anonymous access
     async getPublic() {
         return { message: 'Public route' };
     }
 
     @Get('optional')
-    @OptionalAuth()
+    @OptionalAuth() // Authentication is optional
     async getOptional(@Session() session: UserSession) {
         return { authenticated: !!session };
     }

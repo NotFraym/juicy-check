@@ -8,7 +8,9 @@ services:
     container_name: juicycheck-api
     restart: always
     ports:
-      - "3000:3000"
+      - "5010:5010"
+    env_file:
+      - .env
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}

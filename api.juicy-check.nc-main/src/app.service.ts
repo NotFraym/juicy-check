@@ -9,8 +9,8 @@ export class AppService {
   }
 
   async getUsers(): Promise<any[]> {
-    const userList = await db.select().from(user).limit(10);
-    console.log('userList', userList);
-    return userList;
+    const usersList = await db.select().from(user).limit(10);
+    console.log('usersList', usersList);
+    return usersList;
   }
 }

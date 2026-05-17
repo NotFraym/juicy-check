@@ -1,7 +1,4 @@
-node_modules/
-dist/
-drizzle/
-.git/
-.env
-.env.*
-*.log
+node_modules
+dist
+drizzle
+.git

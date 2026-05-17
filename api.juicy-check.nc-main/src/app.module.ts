@@ -1,9 +1,11 @@
+import 'dotenv/config';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from '@thallesp/nestjs-better-auth';
-import { auth } from "./lib/auth/auth";
+import { auth } from "./lib/auth/auth"; // Your Better Auth instance
 import { UserModule } from './modules/user/user.module';
+
 
 @Module({
   imports: [
@@ -13,4 +15,4 @@ import { UserModule } from './modules/user/user.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
