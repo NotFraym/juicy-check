@@ -12,14 +12,18 @@ FROM node:22-alpine AS production
 
 WORKDIR /app
 
+# Copy full node_modules from builder so drizzle-kit and its TS runtime (jiti) are available
+COPY --from=builder /app/node_modules ./node_modules
 COPY package*.json ./
-RUN npm ci --omit=dev
 
 COPY --from=builder /app/dist ./dist
 
-COPY --from=builder /app/drizzle ./drizzle
-COPY --from=builder /app/drizzle.config.ts ./drizzle.config.ts
+# Copy files drizzle-kit push needs to introspect the schema
+COPY drizzle.config.ts ./
+COPY src/lib/db ./src/lib/db
 
-EXPOSE 3000
+COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 
-CMD ["node", "dist/main"]
+
+CMD ["./entrypoint.sh"]
