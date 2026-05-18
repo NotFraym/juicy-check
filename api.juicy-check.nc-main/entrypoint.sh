@@ -12,7 +12,7 @@ done
 echo "✅ Database is up"
 
 echo "🚀 Running migrations (drizzle-kit push)..."
-npx drizzle-kit push
+npx drizzle-kit push --force
 
 echo "✅ Migrations done"
 
