@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - "8010:5000"
+      - "8010:8010"
     env_file:
       - .env
     environment:
