@@ -5,31 +5,34 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: juicycheck-api
+    container_name: mathieugalois-api
     restart: always
     ports:
-      - "5010:5010"
+      - "8001:3000"
     env_file:
       - .env
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
+      BETTER_AUTH_URL: ${BETTER_AUTH_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
       db:
         condition: service_healthy
 
   db:
     image: postgres:16-alpine
-    container_name: juicycheck-postgres
+    container_name: mathieugalois-postgres
     restart: always
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5435:5432"
     volumes:
-      - juicycheck_pgdata:/var/lib/postgresql/data
+      - mathieugalois_pgdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
       interval: 10s
@@ -38,4 +41,4 @@ services:
       start_period: 10s
 
 volumes:
-  juicycheck_pgdata:
+  mathieugalois_pgdata:
